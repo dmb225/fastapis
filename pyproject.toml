@@ -119,6 +119,6 @@ unfixable = []
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.lint.isort]
-known-first-party = ["src", "fastapis"]   # your own packages
 combine-as-imports = true
 force-sort-within-sections = true
+known-third-party = ["fastapi", "pydantic", "starlette"]
