@@ -1,9 +1,124 @@
 [project]
 name = "fastapis"
-version = "0.1.0"
-description = "Add your description here"
+description = "A boilerplate project for building application programming interfaces"
+dynamic = ["version"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "ruff>=0.12.12",
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Dao Malick B.", email = "daomalick225@gmail.com"}
 ]
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+]
+dependencies = [
+    "fastapi==0.117.1",
+    "pydantic==2.11.9",
+    "uvicorn==0.36.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "mypy",
+    "pre-commit",
+    "pytest",
+    "ruff",
+]
+
+[project.scripts]
+run-server = "fastapis.main:main"
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.1.0"
+
+[tool.hatch.envs.default.scripts]
+format = "ruff format src"
+check-format = "ruff format --check src"
+lint = "ruff check src"
+all = [
+  "check-format",
+  "lint",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fastapis"]
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+
+[tool.mypy]
+strict = true
+disable_error_code = ["misc"]
+
+[[tool.mypy.overrides]]
+module = ["fastapi.*", "uvicorn.*"]
+ignore_missing_imports = true
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+fix = true
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.isort]
+known-first-party = ["src", "fastapis"]   # your own packages
+combine-as-imports = true
+force-sort-within-sections = true
