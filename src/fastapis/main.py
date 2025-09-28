@@ -21,5 +21,4 @@ app.include_router(api_router)
 
 
 def main() -> None:
-    log.info("Starting FastAPIs...")
     uvicorn.run("fastapis.main:app", host="0.0.0.0")
