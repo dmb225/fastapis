@@ -19,6 +19,7 @@ classifiers = [
 dependencies = [
     "fastapi==0.117.1",
     "pydantic==2.11.9",
+    "starlette==0.48.0",
     "uvicorn==0.36.0",
 ]
 
@@ -69,7 +70,7 @@ strict = true
 disable_error_code = ["misc"]
 
 [[tool.mypy.overrides]]
-module = ["fastapi.*", "uvicorn.*"]
+module = ["fastapi.*", "starlette.*", "uvicorn.*"]
 ignore_missing_imports = true
 
 [tool.ruff]
@@ -100,20 +101,20 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "C",  # flake8-comprehensions
-    "B",  # flake8-bugbear
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "SIM",   # flake8-simplify
+    "T201",  # flake8-print
+    "UP",    # pyupgrade
 ]
+
 ignore = [
     "E501",  # line too long, handled by black
 ]
-
-# Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "B", "C", "D", "E", "F"]
-unfixable = []
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
